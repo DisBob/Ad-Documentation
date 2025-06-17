@@ -152,19 +152,23 @@
                             <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div class="step-accordion-content px-4 pb-4">
-                            <p class="text-slate-600 my-4">The first task of the day is to check the Canoe platform for reports on missing ad promotions. The email arrives twice daily.</p>
-                            <ol class="list-decimal list-inside space-y-2 text-slate-700">
+                            <p class="text-slate-600 my-4">The first task of the day is to check the Canoe platform for reports on missing ad promotions. The email arrives twice daily and contains two attachments (one for paid, one for unpaid promos).</p>
+                            <h4 class="font-semibold text-slate-800 mt-4 mb-2">Detailed Steps:</h4>
+                            <ol class="list-decimal list-inside space-y-3 text-slate-700">
                                 <li>Open the "Promo Missing Ads" email from Canoe.</li>
-                                <li>Filter the report. Remember that Charter only receives ads for **ABC and Disney Channel**.</li>
-                                <li>For valid missing ads, copy the Mass ID.</li>
-                                <li>Use the interactive diagram below to determine the correct action.</li>
+                                <li>To analyze the attached report, first sort by **Network (Column B)**.</li>
+                                <li>Apply a highlight marker to **ABC** and **Disney Channel** rows. This is critical because **Charter** only receives ads for these two networks. Any other network flagged as missing for Charter can be ignored.</li>
+                                <li>Next, sort the report by affiliate (**Comcast - Column N** and **Cox - Column P**) to group them.</li>
+                                <li>Compare the **Mass ID** on the report to your pre-existing tracking list to identify new issues.</li>
+                                <li>If an item is new and valid, proceed to the action flow below.</li>
+                                <li>If an item was already repitched but remains on the report for a few days, escalate by emailing <a href="mailto:operations@canoeventures.com" class="text-sky-600 hover:underline font-medium">Canoe Operations</a>.</li>
                             </ol>
                             <div class="mt-6 p-4 bg-slate-50 rounded-lg">
-                                <h4 class="font-bold text-center mb-6 text-slate-700">Interactive Flow: Canoe Report Item</h4>
+                                <h4 class="font-bold text-center mb-6 text-slate-700">Action Flow for New Missing Ads</h4>
                                 <div class="relative">
                                      <div class="flex justify-center">
                                         <div class="flow-chart-box flow-chart-decision w-72">
-                                            <p class="font-semibold">Is the item a "MOVE" asset (starts with `MOVE...`)?</p>
+                                            <p class="font-semibold">Is the item a "MOVE" asset (e.g., FX, starts with `MOVE...`)?</p>
                                         </div>
                                     </div>
                                     <div class="mt-16 grid grid-cols-2 gap-8">
@@ -188,13 +192,16 @@
                             <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div class="step-accordion-content px-4 pb-4">
-                            <p class="text-slate-600 my-4">This workflow involves cleaning the Google Doc and processing new ads as content becomes available.</p>
+                            <p class="text-slate-600 my-4">This workflow uses the "FX & Nat Geo Working" Google Doc and requires converting standard assets into DAI (Dynamic Ad Insertion) assets.</p>
+                            <h4 class="font-semibold text-slate-800 mt-4 mb-2">Detailed Steps:</h4>
                             <ol class="list-decimal list-inside space-y-3 text-slate-700">
-                                <li>**Clean the Google Doc (bi-weekly):** Move expired ads from the "FX & Nat Geo Working" tab to the "Pitched - Past LW End" tab.</li>
-                                <li>**Check for "Awaiting Content":** Look for assets ready to be processed.</li>
-                                <li>**Generate DAI Asset:** If media is available in the Media Dashboard, select it and click "Generate DAI Asset."</li>
-                                <li>**Create Planner in VOD+:** Filter VOD+ for new DAI assets and click "Create Planner."</li>
-                                <li>**Update Google Doc:** Copy the planner info (Asset Name, MOV ID, Dates) into the Google Doc and mark as "Complete."</li>
+                                <li>**Clean the Google Doc (bi-weekly):** Review the "License Window End" column. Cut and paste any expired ads into the "Pitched - Past LW End" tab.</li>
+                                <li>**Check for "Awaiting Content":** Find rows marked with this status. Copy the **ISCI/Provider ID (Column D)**.</li>
+                                <li>**Search in Media Dashboard:** Paste the ID into the search bar in the **Media Dashboard** (not VOD+). If the status is green/completed, proceed. If not, the content is not yet available.</li>
+                                <li>**Generate DAI Asset:** In the Media Dashboard, check the box for the completed asset and from the dropdown menu, select "Generate DAI asset".</li>
+                                <li>**Create Planner in VOD+:** Once the DAI asset is generated, switch to **VOD+**. Filter by **NLDD Type: DAI** and **Start Date: Today**. The new asset will appear.</li>
+                                <li>Select the new asset(s) and click **"Create Planner"**.</li>
+                                <li>**Format and Update Google Doc:** From the planner, narrow down the columns to **Asset Name, Move Asset ID, Start,** and **End**. Copy the HD and SD lines and paste them into the FX Google Doc. Update the status column to "Complete".</li>
                            </ol>
                         </div>
                     </div>
@@ -205,11 +212,15 @@
                            <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div class="step-accordion-content px-4 pb-4">
-                             <p class="text-slate-600 my-4">This is a multi-team workflow tracked within the "ABC & Kids Working" Google Doc.</p>
+                             <p class="text-slate-600 my-4">This is a multi-team workflow tracked within the "ABC & Kids Working" Google Doc. Our work begins after Media Services has completed their prep.</p>
+                             <h4 class="font-semibold text-slate-800 mt-4 mb-2">Detailed Steps:</h4>
                            <ol class="list-decimal list-inside space-y-3 text-slate-700">
-                                <li>**Monitor "Media Services" Column:** The workflow begins when an "X" appears, indicating the ad is prepped.</li>
-                                <li>**Verify in VOD+:** Use the Placing ID to find the asset in VOD+ and confirm SD/HD versions are correct.</li>
-                                <li>**Update Google Doc:** Copy the Mass ID from VOD+ into the Google Doc and add the current date.</li>
+                                <li>**Monitor "Media Service" Column (N):** The workflow begins when an **"X"** appears in this column, indicating Media Services has prepped the ad.</li>
+                                <li>**Verify in VOD+:** Copy the **Placing ID (Column O or Q)** and search for it in VOD+.</li>
+                                <li>Confirm that the correct versions exist (one SD and one HD) and that the media is correct.</li>
+                                <li>If the Placing IDs are incorrect (e.g., HD in SD slot), highlight the row and notify the Ad Manager. Do not change the IDs.</li>
+                                <li>**Update Google Doc:** If the assets are correct, copy the **Mass ID** from VOD+.</li>
+                                <li>Paste the Mass ID into the appropriate SD/HD column in the Google Doc and add the current date to the last column.</li>
                            </ol>
                         </div>
                     </div>
@@ -394,11 +405,6 @@
                         <h4 class="font-semibold text-lg">Workflow Overview Video</h4>
                         <p class="text-slate-600 my-2">Watch the full video walkthrough of the general ad workflow and engineering issues discussed in this SOP.</p>
                         <a href="https://twdc.sharepoint.com/:v:/s/VODDistribution/EaGUXgtyiNVKoEPK_hevbroB6Q9V6KtVqjJC0cWXMpR24Q" target="_blank" rel="noopener noreferrer" class="font-medium text-sky-600 hover:underline">Open Video on SharePoint &rarr;</a>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-                        <h4 class="font-semibold text-lg">Ad Process Details Video</h4>
-                        <p class="text-slate-600 my-2">This video provides a focused look at the ad processing steps.</p>
-                        <a href="https://drive.google.com/file/d/1VBCP3AXnMbVNuC5W6TukaNOeQZCgzUT3/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="font-medium text-sky-600 hover:underline">Open Video on Google Drive &rarr;</a>
                     </div>
                 </div>
             </section>
