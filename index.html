@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Calm Harmony -->
-    <!-- Application Structure Plan: The SPA is structured as a task-oriented dashboard with a fixed sidebar for navigation. This design was chosen to mirror how an operations professional would use the SOP: either by following the 'Daily Workflow' sequentially, jumping directly to the 'Troubleshooting' section to solve a specific problem, or referencing the 'Checklist' and 'Contacts' as needed. This non-linear, functional structure is more usable than a static document, allowing users to quickly access the information relevant to their immediate task. Interactive elements like accordions for workflow steps and clickable cards for troubleshooting issues break down complex information into digestible chunks, enhancing comprehension and efficiency. -->
-    <!-- Visualization & Content Choices: The application translates procedural text into an interactive experience. Goal: Organize/Inform -> Method: The core workflow is presented as an interactive diagram using styled HTML/Tailwind divs and borders, visually guiding users through decision points (e.g., "Is it a MOVE item?"). This is more engaging than a simple list. Goal: Solve -> Method: The troubleshooting guide uses clickable cards to dynamically reveal detailed resolution steps, preventing information overload. Goal: Track -> Method: A functional daily checklist with HTML checkboxes provides a tangible sense of progress. All visualizations are built with HTML/CSS/JS, confirming NO SVG/Mermaid is used, and are integrated within the task-oriented application structure. -->
+    <!-- Application Structure Plan: The SPA is structured as a task-oriented dashboard with a fixed sidebar for navigation. This design was chosen to mirror how an operations professional would use the SOP: either by following the 'Daily Workflow' sequentially, jumping directly to the 'Troubleshooting' section to solve a specific problem, or referencing the 'Checklist' and 'Contacts' as needed. This non-linear, functional structure is more usable than a static document, allowing users to quickly access the information relevant to their immediate task. Interactive elements like accordions for workflow steps and clickable cards for troubleshooting issues break down complex information into digestible chunks, enhancing comprehension and efficiency. A search bar was added to enable global content filtering and highlighting, further improving findability. -->
+    <!-- Visualization & Content Choices: The application translates procedural text into an interactive experience. Goal: Organize/Inform -> Method: The core workflow is presented as an interactive diagram using styled HTML/Tailwind divs and borders, visually guiding users through decision points (e.g., "Is it a MOVE item?"). This is more engaging than a simple list. Goal: Solve -> Method: The troubleshooting guide uses clickable cards to dynamically reveal detailed resolution steps, preventing information overload. Goal: Track -> Method: A functional daily checklist with HTML checkboxes provides a tangible sense of progress. Goal: Find -> Method: A search input uses JS to filter content and highlight matches with <mark> tags, making specific terms easy to locate. All visualizations are built with HTML/CSS/JS, confirming NO SVG/Mermaid is used, and are integrated within the task-oriented application structure. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -60,18 +60,31 @@
             border: 1px solid #10b981; /* emerald-500 */
             background-color: #ecfdf5; /* emerald-50 */
         }
+        mark {
+            background-color: #fef08a; /* yellow-200 */
+            padding: 0 2px;
+            border-radius: 2px;
+        }
     </style>
 </head>
 <body class="text-slate-800">
 
     <div class="flex h-screen bg-slate-50">
         <!-- Sidebar -->
-        <aside class="w-64 bg-white shadow-md flex-shrink-0">
+        <aside class="w-64 bg-white shadow-md flex-shrink-0 flex flex-col">
             <div class="p-6">
                 <h1 class="text-2xl font-bold text-sky-800">Ad Workflow</h1>
                 <p class="text-sm text-slate-500 mt-1">Interactive SOP</p>
             </div>
-            <nav id="sidebar-nav" class="mt-4 px-4">
+             <div class="px-4 mb-4">
+                <div class="relative">
+                    <input type="text" id="search-input" placeholder="Search SOP..." class="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-sky-500 focus:border-sky-500 transition">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                </div>
+            </div>
+            <nav id="sidebar-nav" class="flex-grow px-4 overflow-y-auto">
                 <a href="#dashboard" class="sidebar-link active flex items-center p-3 rounded-lg font-medium">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
                     Dashboard
@@ -100,10 +113,10 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 p-6 lg:p-10 overflow-y-auto">
+        <main id="main-content" class="flex-1 p-6 lg:p-10 overflow-y-auto">
 
             <!-- Dashboard Section -->
-            <section id="dashboard" class="content-section active">
+            <section id="dashboard" class="content-section active searchable-block">
                 <h2 class="text-3xl font-bold">Welcome to the Interactive Ad Workflow SOP</h2>
                 <p class="mt-4 text-lg text-slate-600">This application transforms the standard operating procedure for ad trafficking into a dynamic, easy-to-use guide. Its purpose is to help you efficiently manage daily tasks, troubleshoot common issues, and quickly find the information you need. Use the navigation on the left to explore the different sections.</p>
                 
@@ -133,7 +146,7 @@
 
                 <div class="mt-8 space-y-4" id="workflow-steps">
                     <!-- Step 1 -->
-                    <div class="bg-white rounded-lg border border-slate-200 shadow-sm">
+                    <div class="bg-white rounded-lg border border-slate-200 shadow-sm searchable-block">
                         <button class="step-accordion-toggle w-full flex justify-between items-center p-4 text-left font-semibold text-lg" data-step="1">
                             <span>Step 1: Check Canoe for Missing Ads</span>
                             <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -169,7 +182,7 @@
                         </div>
                     </div>
                     <!-- Step 2 -->
-                    <div class="bg-white rounded-lg border border-slate-200 shadow-sm">
+                    <div class="bg-white rounded-lg border border-slate-200 shadow-sm searchable-block">
                         <button class="step-accordion-toggle w-full flex justify-between items-center p-4 text-left font-semibold text-lg" data-step="2">
                             <span>Step 2: Manage FX & Nat Geo Ads</span>
                             <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -186,7 +199,7 @@
                         </div>
                     </div>
                      <!-- Step 3 -->
-                    <div class="bg-white rounded-lg border border-slate-200 shadow-sm">
+                    <div class="bg-white rounded-lg border border-slate-200 shadow-sm searchable-block">
                         <button class="step-accordion-toggle w-full flex justify-between items-center p-4 text-left font-semibold text-lg" data-step="3">
                             <span>Step 3: Manage ABC & Kids Ads</span>
                            <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -209,15 +222,15 @@
                 <p class="mt-2 text-slate-600">Encounter a problem? This section provides a quick guide to common issues and their resolutions. Select an issue from the list below to see the step-by-step fix.</p>
                 <div class="lg:flex lg:space-x-8 mt-8">
                     <div class="lg:w-1/3 space-y-3" id="troubleshooting-nav">
-                        <button data-target="ts-media" class="troubleshooting-card w-full text-left p-4 bg-white rounded-lg border-2 border-transparent hover:border-sky-400 transition shadow-sm">
+                        <button data-target="ts-media" class="troubleshooting-card searchable-block w-full text-left p-4 bg-white rounded-lg border-2 border-transparent hover:border-sky-400 transition shadow-sm">
                             <h4 class="font-semibold text-lg">Missing Media</h4>
                             <p class="text-sm text-slate-500 mt-1">Prepped ad not found in VOD+.</p>
                         </button>
-                         <button data-target="ts-duplicate" class="troubleshooting-card w-full text-left p-4 bg-white rounded-lg border-2 border-transparent hover:border-sky-400 transition shadow-sm">
+                         <button data-target="ts-duplicate" class="troubleshooting-card searchable-block w-full text-left p-4 bg-white rounded-lg border-2 border-transparent hover:border-sky-400 transition shadow-sm">
                             <h4 class="font-semibold text-lg">Duplicate Ads</h4>
                             <p class="text-sm text-slate-500 mt-1">An entry turns blue in the Google Doc.</p>
                         </button>
-                        <button data-target="ts-gam" class="troubleshooting-card w-full text-left p-4 bg-white rounded-lg border-2 border-transparent hover:border-sky-400 transition shadow-sm">
+                        <button data-target="ts-gam" class="troubleshooting-card searchable-block w-full text-left p-4 bg-white rounded-lg border-2 border-transparent hover:border-sky-400 transition shadow-sm">
                             <h4 class="font-semibold text-lg">GAM Issues</h4>
                             <p class="text-sm text-slate-500 mt-1">Asset not appearing in Google Ad Manager.</p>
                         </button>
@@ -258,7 +271,7 @@
             </section>
             
             <!-- Checklist Section -->
-            <section id="checklist" class="content-section">
+            <section id="checklist" class="content-section searchable-block">
                 <h2 class="text-3xl font-bold">Daily Checklist</h2>
                 <p class="mt-2 text-slate-600">Use this checklist to track your progress on daily ad trafficking tasks.</p>
                 <div id="checklist-container" class="mt-8 space-y-4 max-w-2xl">
@@ -308,7 +321,7 @@
             </section>
             
              <!-- Contacts Section -->
-            <section id="contacts" class="content-section">
+            <section id="contacts" class="content-section searchable-block">
                 <h2 class="text-3xl font-bold">Key Contacts & Communication</h2>
                  <p class="mt-2 text-slate-600">A quick reference list of primary communication channels and key contacts for troubleshooting and escalations.</p>
                 <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -373,14 +386,19 @@
             </section>
             
             <!-- Video Tutorials Section -->
-            <section id="video-tutorials" class="content-section">
+            <section id="video-tutorials" class="content-section searchable-block">
                  <h2 class="text-3xl font-bold">Video Tutorials</h2>
                 <p class="mt-2 text-slate-600 mb-4">The following links open the video walkthroughs in a new tab.</p>
                 <div class="space-y-4">
                     <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
                         <h4 class="font-semibold text-lg">Workflow Overview Video</h4>
                         <p class="text-slate-600 my-2">Watch the full video walkthrough of the general ad workflow and engineering issues discussed in this SOP.</p>
-                        <a href="https://twdc.sharepoint.com/:v:/s/VODDistribution/EaGUXgtyiNVKoEPK_hevbroB6Q9V6KtVqjJC0cWXMpR24Q" target="_blank" rel="noopener noreferrer" class="font-medium text-sky-600 hover:underline">Open Video &rarr;</a>
+                        <a href="https://twdc.sharepoint.com/:v:/s/VODDistribution/EaGUXgtyiNVKoEPK_hevbroB6Q9V6KtVqjJC0cWXMpR24Q" target="_blank" rel="noopener noreferrer" class="font-medium text-sky-600 hover:underline">Open Video on SharePoint &rarr;</a>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
+                        <h4 class="font-semibold text-lg">Ad Process Details Video</h4>
+                        <p class="text-slate-600 my-2">This video provides a focused look at the ad processing steps.</p>
+                        <a href="https://drive.google.com/file/d/1VBCP3AXnMbVNuC5W6TukaNOeQZCgzUT3/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="font-medium text-sky-600 hover:underline">Open Video on Google Drive &rarr;</a>
                     </div>
                 </div>
             </section>
@@ -396,6 +414,75 @@
             const tsContents = document.querySelectorAll('.troubleshooting-content');
             const accordionToggles = document.querySelectorAll('.step-accordion-toggle');
             const checklistLinks = document.querySelectorAll('#checklist-container a');
+            const searchInput = document.getElementById('search-input');
+            
+            const searchableTextElements = document.querySelectorAll('#main-content p, #main-content li, #main-content h1, #main-content h2, #main-content h3, #main-content h4, #main-content span, #main-content a');
+            searchableTextElements.forEach(el => {
+                el.dataset.originalHtml = el.innerHTML;
+            });
+            
+            const searchableBlocks = document.querySelectorAll('.searchable-block');
+
+            function handleSearch() {
+                const query = searchInput.value.toLowerCase().trim();
+
+                searchableTextElements.forEach(el => {
+                    el.innerHTML = el.dataset.originalHtml;
+                });
+                
+                accordionToggles.forEach(toggle => {
+                    const content = toggle.nextElementSibling;
+                    if (content.style.maxHeight) {
+                        toggle.classList.remove('active');
+                        content.style.maxHeight = null;
+                        toggle.querySelector('svg').style.transform = 'rotate(0deg)';
+                    }
+                });
+
+                if (!query) {
+                    searchableBlocks.forEach(block => block.style.display = '');
+                    navigateTo(window.location.hash.substring(1) || 'dashboard');
+                    return;
+                }
+
+                const regex = new RegExp(query, 'gi');
+                let foundInAnyBlock = false;
+                
+                contentSections.forEach(sec => sec.style.display = 'block');
+
+                searchableBlocks.forEach(block => {
+                    const textElementsInBlock = block.querySelectorAll('p, li, h1, h2, h3, h4, span, a');
+                    let blockHasMatch = false;
+
+                    textElementsInBlock.forEach(el => {
+                        const originalHtml = el.dataset.originalHtml;
+                        const text = el.textContent.toLowerCase();
+
+                        if (text.includes(query)) {
+                            blockHasMatch = true;
+                            foundInAnyBlock = true;
+                            el.innerHTML = originalHtml.replace(regex, (match) => `<mark>${match}</mark>`);
+                        }
+                    });
+
+                    block.style.display = blockHasMatch ? '' : 'none';
+
+                    if (blockHasMatch && block.querySelector('.step-accordion-content')) {
+                        const toggle = block.querySelector('.step-accordion-toggle');
+                        const content = block.querySelector('.step-accordion-content');
+                        toggle.classList.add('active');
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        toggle.querySelector('svg').style.transform = 'rotate(180deg)';
+                    }
+                });
+                
+                if (foundInAnyBlock) {
+                    sidebarLinks.forEach(link => link.classList.remove('active'));
+                }
+            }
+
+            searchInput.addEventListener('input', handleSearch);
+
 
             function updateView(hash) {
                 const targetId = hash.substring(1);
@@ -407,6 +494,10 @@
                 contentSections.forEach(section => {
                     section.classList.toggle('active', section.id === targetId);
                 });
+                 if (searchInput.value) {
+                    searchInput.value = '';
+                    handleSearch();
+                }
             }
 
             function navigateTo(viewId) {
@@ -484,4 +575,3 @@
     </script>
 </body>
 </html>
-
