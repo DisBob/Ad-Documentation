@@ -97,6 +97,10 @@
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
                     Troubleshooting
                 </a>
+                <a href="#sd-gam-issue" class="sidebar-link flex items-center p-3 rounded-lg font-medium mt-2">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    SD GAM Issue
+                </a>
                 <a href="#checklist" class="sidebar-link flex items-center p-3 rounded-lg font-medium mt-2">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     Checklist
@@ -278,6 +282,36 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </section>
+
+             <!-- SD GAM Issue Section -->
+            <section id="sd-gam-issue" class="content-section searchable-block">
+                <h2 class="text-3xl font-bold">SD GAM Issue Deep Dive</h2>
+                <p class="mt-2 text-slate-600 mb-6">This section provides a detailed explanation of the recurring issue where Standard Definition (SD) ads fail to appear in Google Ad Manager (GAM), even when the HD version is working correctly.</p>
+                <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+                    <h3 class="font-bold text-xl mb-4 text-orange-700">Step-by-Step Troubleshooting Process</h3>
+                    <ol class="list-decimal list-inside space-y-4 text-slate-700">
+                        <li>
+                            <strong class="font-semibold text-slate-800">Rule Out User Error:</strong>
+                            <p class="ml-6 mt-1">The first step is to ask the Ad Manager to double-check their work in GAM. Have them confirm there are no extra or "phantom" spaces before or after the Placing ID or Mass ID when searching. It's also best practice to have them try typing the ID in manually instead of copy-pasting.</p>
+                        </li>
+                        <li>
+                            <strong class="font-semibold text-slate-800">Perform the Two-Step Repitch:</strong>
+                            <p class="ml-6 mt-1">If the manual check doesn't work, this specific repitching sequence resolves the issue about 85% of the time:</p>
+                            <ul class="list-disc list-inside ml-8 mt-2 space-y-1">
+                                <li>**Step A:** Repitch the SD asset directly to the affiliate (e.g., Comcast) in VOD+ and wait for that delivery to complete.</li>
+                                <li>**Step B:** After the first delivery is done, repitch the asset specifically to GAM.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong class="font-semibold text-slate-800">Escalation Path:</strong>
+                            <div class="ml-6 mt-1 space-y-2">
+                                <p><strong class="font-medium">For a Single SD Ad:</strong> If the two-step repitch fails for one isolated ad, there are no further technical steps for the operations team. The Ad Manager must decide whether to create entirely new placing IDs for both the HD and SD versions.</p>
+                                <p><strong class="font-medium">For Multiple Ads:</strong> If the problem affects multiple ads or includes an HD ad, it indicates a larger system issue. Escalate immediately to **Caroline's Team** for a formal investigation with Canoe and other partners.</p>
+                            </div>
+                        </li>
+                    </ol>
                 </div>
             </section>
             
