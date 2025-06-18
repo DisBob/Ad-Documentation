@@ -32,49 +32,21 @@
         .content-section.active {
             display: block;
         }
-        .step-accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-in-out;
-        }
         .troubleshooting-card.active {
              border-color: #0ea5e9; /* sky-500 */
              box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        }
-        .flow-chart-box {
-            border: 1px solid #cbd5e1; /* slate-300 */
-            background-color: #ffffff;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            text-align: center;
-            position: relative;
-        }
-        .flow-chart-decision {
-            border: 1px solid #f97316; /* orange-500 */
-            background-color: #fff7ed; /* orange-50 */
-        }
-         .flow-chart-process {
-            border: 1px solid #0ea5e9; /* sky-500 */
-            background-color: #f0f9ff; /* sky-50 */
-        }
-        .flow-chart-contact {
-            border: 1px solid #10b981; /* emerald-500 */
-            background-color: #ecfdf5; /* emerald-50 */
-        }
-        .flow-arrow {
-            position: absolute;
-            background-color: #94a3b8;
-            z-index: -10;
         }
         mark {
             background-color: #fef08a; /* yellow-200 */
             padding: 0 2px;
             border-radius: 2px;
         }
-        .chart-container {
-            position: relative;
-            height: 350px;
-            width: 100%;
+        .prose a {
+            color: #0284c7;
+            text-decoration: none;
+        }
+        .prose a:hover {
+            text-decoration: underline;
         }
         .sop-section-card {
             background-color: white;
@@ -130,10 +102,6 @@
                  <a href="#sop" class="sidebar-link flex items-center p-3 rounded-lg font-medium mt-2">
                      <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                     Daily Ad Operations
-                </a>
-                <a href="#workflow" class="sidebar-link flex items-center p-3 rounded-lg font-medium mt-2">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                    Ad Workflow
                 </a>
                 <a href="#troubleshooting" class="sidebar-link flex items-center p-3 rounded-lg font-medium mt-2">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
@@ -227,8 +195,8 @@
                                         <li><strong>For FX "MOVE" Assets:</strong>
                                             <ol class="list-decimal ml-5 mt-1 space-y-1">
                                                 <li>These are identified by an ID starting with "MOVE".</li>
-                                                <li>**Do not attempt to repitch these yourself.**</li>
-                                                <li>Open a new email to <strong>Christopher Freeman</strong> (`Christopher_Freeman2@comcast.com`) to request a manual repitch.</li>
+                                                <li><strong>Do not attempt to repitch these yourself.</strong></li>
+                                                <li>Open a new email to <a href="mailto:Christopher_Freeman2@comcast.com" class="text-sky-600 hover:underline"><strong>Christopher Freeman</strong></a>.</li>
                                             </ol>
                                         </li>
                                     </ul>
@@ -288,295 +256,6 @@
 
                 </div>
             </section>
-
-
-            <!-- Ad Workflow Section -->
-            <section id="workflow" class="content-section">
-                <h2 class="text-3xl font-bold">Ad Workflow Visuals</h2>
-                <p class="mt-2 text-slate-600">This section provides a visual, step-by-step guide to the daily ad trafficking process. Click each step header to expand and see the detailed procedure.</p>
-
-                <div class="mt-8 space-y-4" id="workflow-steps">
-                    <!-- Step 1 -->
-                    <div class="bg-white rounded-lg border border-slate-200 shadow-sm searchable-block">
-                        <button class="step-accordion-toggle w-full flex justify-between items-center p-4 text-left font-semibold text-lg" data-step="1">
-                            <span>Step 1: Check Canoe for Missing Ads</span>
-                            <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </button>
-                        <div class="step-accordion-content px-4 pb-4">
-                            <p class="text-slate-600 my-4">The first task of the day is to check the Canoe platform for reports on missing ad promotions. The email arrives twice daily and contains two attachments (one for paid, one for unpaid promos).</p>
-                             <div class="mt-6 p-4 bg-slate-50 rounded-lg">
-                                <h4 class="font-bold text-center mb-6 text-slate-700">Action Flow for New Missing Ads</h4>
-                                <div class="relative">
-                                     <div class="flex justify-center">
-                                        <div class="flow-chart-box flow-chart-decision w-72">
-                                            <p class="font-semibold">Is the item a "MOVE" asset (e.g., FX, starts with `MOVE...`)?</p>
-                                        </div>
-                                    </div>
-                                    <div class="mt-16 grid grid-cols-2 gap-8">
-                                         <div class="flow-chart-box flow-chart-contact">
-                                            <p class="font-semibold">YES &rarr; Email Comcast</p>
-                                            <p class="text-sm mt-1">Cannot be repitched by our team. Email <a href="mailto:Christopher_Freeman2@comcast.com" class="text-sky-600 hover:underline font-medium">Christopher Freeman</a> to request a repitch.</p>
-                                        </div>
-                                        <div class="flow-chart-box flow-chart-process">
-                                            <p class="font-semibold">NO &rarr; Standard Repitch</p>
-                                            <p class="text-sm mt-1">Search the Mass ID in <a href="https://dmed.twdcmediahub.com/vod-plus/dashboard" target="_blank" rel="noopener noreferrer" class="text-sky-600 hover:underline font-medium">Media Hub VOD+</a> and repitch to the correct affiliate.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Step 2 -->
-                    <div class="bg-white rounded-lg border border-slate-200 shadow-sm searchable-block">
-                        <button class="step-accordion-toggle w-full flex justify-between items-center p-4 text-left font-semibold text-lg" data-step="2">
-                            <span>Step 2: Manage FX & Nat Geo Ads</span>
-                            <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </button>
-                        <div class="step-accordion-content px-4 pb-4">
-                            <p class="text-slate-600 my-4">This workflow uses the "FX & Nat Geo Working" Google Doc and requires converting standard assets into DAI (Dynamic Ad Insertion) assets.</p>
-                            <div class="mt-6 p-4 bg-slate-50 rounded-lg">
-                                <h4 class="font-bold text-center mb-6 text-slate-700">FX/Nat Geo DAI Asset Flow</h4>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-8 relative">
-                                    <div class="flow-chart-box flow-chart-process"><p>1. Check <a href="https://docs.google.com/spreadsheets/d/1ONFa7z7nKNwLnQjt9Y78FEZVzSchV9kDYArEmEO5h1c/edit?pli=1&gid=1089390826#gid=1089390826" target="_blank" rel="noopener noreferrer" class="text-sky-600 hover:underline font-medium">Google Doc</a> for "Awaiting Content"</p></div>
-                                    <div class="flow-chart-box flow-chart-process"><p>2. Search for ISCI in Media Dashboard</p></div>
-                                    <div class="flow-chart-box flow-chart-decision"><p>3. Is media ready (green)?</p></div>
-                                    <div class="md:col-start-3 flow-chart-box flow-chart-process"><p>4. Generate DAI Asset</p></div>
-                                    <div class="md:col-start-2 flow-chart-box flow-chart-process"><p>5. Create Planner in VOD+</p></div>
-                                    <div class="md:col-start-1 flow-chart-box flow-chart-process"><p>6. Update Google Doc with planner info</p></div>
-                                </div>
-                             </div>
-                        </div>
-                    </div>
-                     <!-- Step 3 -->
-                    <div class="bg-white rounded-lg border border-slate-200 shadow-sm searchable-block">
-                        <button class="step-accordion-toggle w-full flex justify-between items-center p-4 text-left font-semibold text-lg" data-step="3">
-                            <span>Step 3: Manage ABC & Kids Ads</span>
-                           <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </button>
-                        <div class="step-accordion-content px-4 pb-4">
-                             <p class="text-slate-600 my-4">This is a multi-team workflow tracked within the "ABC & Kids Working" Google Doc. Our work begins after Media Services has completed their prep.</p>
-                             <div class="mt-6 p-4 bg-slate-50 rounded-lg">
-                                <h4 class="font-bold text-center mb-6 text-slate-700">ABC/Kids Ad Flow</h4>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <div class="flow-chart-box flow-chart-process"><p>1. Monitor for "X" in Media Service column in <a href="https://docs.google.com/spreadsheets/d/1ONFa7z7nKNwLnQjt9Y78FEZVzSchV9kDYArEmEO5h1c/edit?pli=1&gid=1757668824#gid=1757668824" target="_blank" rel="noopener noreferrer" class="text-sky-600 hover:underline font-medium">Google Doc</a></p></div>
-                                    <div class="flow-chart-box flow-chart-process"><p>2. Verify Placing ID in <a href="https://dmed.twdcmediahub.com/vod-plus/dashboard" target="_blank" rel="noopener noreferrer" class="text-sky-600 hover:underline font-medium">VOD+</a></p></div>
-                                    <div class="flow-chart-box flow-chart-process"><p>3. Paste Mass ID into Google Doc</p></div>
-                                </div>
-                             </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Troubleshooting Section -->
-            <section id="troubleshooting" class="content-section">
-                <h2 class="text-3xl font-bold">Troubleshooting Guide</h2>
-                <p class="mt-2 text-slate-600">Encounter a problem? This section provides a quick guide to common issues and their resolutions. Select an issue from the list below to see the step-by-step fix.</p>
-                <div class="lg:flex lg:space-x-8 mt-8">
-                    <div class="lg:w-1/3 space-y-3" id="troubleshooting-nav">
-                        <button data-target="ts-media" class="troubleshooting-card searchable-block w-full text-left p-4 bg-white rounded-lg border-2 border-transparent hover:border-sky-400 transition shadow-sm">
-                            <h4 class="font-semibold text-lg">Missing Media</h4>
-                            <p class="text-sm text-slate-500 mt-1">Prepped ad not found in VOD+.</p>
-                        </button>
-                         <button data-target="ts-duplicate" class="troubleshooting-card searchable-block w-full text-left p-4 bg-white rounded-lg border-2 border-transparent hover:border-sky-400 transition shadow-sm">
-                            <h4 class="font-semibold text-lg">Duplicate Ads</h4>
-                            <p class="text-sm text-slate-500 mt-1">An entry turns blue in the Google Doc.</p>
-                        </button>
-                        <button data-target="ts-gam" class="troubleshooting-card searchable-block w-full text-left p-4 bg-white rounded-lg border-2 border-transparent hover:border-sky-400 transition shadow-sm">
-                            <h4 class="font-semibold text-lg">GAM Issues</h4>
-                            <p class="text-sm text-slate-500 mt-1">Asset not appearing in Google Ad Manager.</p>
-                        </button>
-                         <button data-target="ts-sd-gam" class="troubleshooting-card searchable-block w-full text-left p-4 bg-white rounded-lg border-2 border-transparent hover:border-sky-400 transition shadow-sm">
-                            <h4 class="font-semibold text-lg">SD Ad GAM Issue</h4>
-                            <p class="text-sm text-slate-500 mt-1">A recurring problem with SD ads in GAM.</p>
-                        </button>
-                    </div>
-                    <div class="lg:w-2/3 mt-6 lg:mt-0">
-                        <div id="troubleshooting-content-area" class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm min-h-[300px]">
-                            <div id="ts-default" class="troubleshooting-content text-center text-slate-500 pt-16">
-                                <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                <p class="mt-4 font-medium">Select an issue to see details.</p>
-                            </div>
-                            <div id="ts-gam" class="troubleshooting-content hidden">
-                                <h3 class="font-bold text-xl mb-4">Resolving GAM Issues</h3>
-                                <div class="space-y-4">
-                                    <div class="flow-chart-box flow-chart-process"><p>1. Ad Manager reports issue. Ask them to check for extra spaces in GAM ID.</p></div>
-                                    <div class="flow-chart-box flow-chart-process"><p>2. Perform standard repitch.</p></div>
-                                    <div class="flow-chart-box flow-chart-decision"><p>3. Does issue persist?</p></div>
-                                    <div class="flow-chart-box flow-chart-contact"><p><strong>Yes &rarr;</strong> Escalate to Caroline's Team</p></div>
-                                     <div class="flow-chart-box flow-chart-process"><p><strong>No &rarr;</strong> Resolved.</p></div>
-                                </div>
-                            </div>
-                             <div id="ts-media" class="troubleshooting-content hidden">
-                                <h3 class="font-bold text-xl mb-4">Resolving Missing Media</h3>
-                                <div class="space-y-4">
-                                     <div class="flow-chart-box flow-chart-process"><p>1. Check edit history in Google Doc. If recent, wait 30-60 mins.</p></div>
-                                     <div class="flow-chart-box flow-chart-contact"><p>2. Contact Media Services to confirm "ready state."</p></div>
-                                     <div class="flow-chart-box flow-chart-decision"><p>3. Is it confirmed ready?</p></div>
-                                     <div class="flow-chart-box flow-chart-process"><p><strong>Yes &rarr;</strong> Purge from VOD+/SDVI and Republish from Banjo.</p></div>
-                                     <div class="flow-chart-box flow-chart-process"><p><strong>No &rarr;</strong> Wait for Media Services to fix.</p></div>
-                                </div>
-                            </div>
-                            <div id="ts-duplicate" class="troubleshooting-content hidden">
-                                <h3 class="font-bold text-xl mb-4">Handling Duplicate Ads</h3>
-                                  <div class="space-y-4">
-                                     <div class="flow-chart-box flow-chart-process"><p>1. Highlight duplicate row in red and add "X" to processing columns.</p></div>
-                                     <div class="flow-chart-box flow-chart-process"><p>2. Add note referencing original line number.</p></div>
-                                     <div class="flow-chart-box flow-chart-contact"><p>3. Contact Ad Manager/Supervisor for clarification.</p></div>
-                                </div>
-                            </div>
-                            <div id="ts-sd-gam" class="troubleshooting-content hidden">
-                                <h3 class="font-bold text-xl mb-4">Resolving SD Ad GAM Issue</h3>
-                                <p class="mb-4 text-slate-600">This is a recurring problem where Standard Definition (SD) ads fail to appear in GAM, even when the HD version is working correctly.</p>
-                                <ol class="list-decimal list-inside space-y-4 text-slate-700">
-                                    <li>
-                                        <strong class="font-semibold text-slate-800">Rule Out User Error:</strong>
-                                        <p class="ml-6 mt-1">Ask the Ad Manager to confirm there are no extra or "phantom" spaces before or after the Placing/Mass ID in GAM and to try typing it manually.</p>
-                                    </li>
-                                    <li>
-                                        <strong class="font-semibold text-slate-800">Perform the Two-Step Repitch:</strong>
-                                        <p class="ml-6 mt-1">This specific sequence has a high success rate for this issue:</p>
-                                        <ul class="list-disc list-inside ml-8 mt-2 space-y-1">
-                                            <li>**Step A:** Repitch the SD asset directly to the **affiliate** and wait for completion.</li>
-                                            <li>**Step B:** After the first delivery is complete, repitch the asset specifically to **GAM**.</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <strong class="font-semibold text-slate-800">Escalation Path:</strong>
-                                        <div class="ml-6 mt-1 space-y-2">
-                                            <p><strong class="font-medium">For a Single Ad:</strong> If the two-step repitch fails, operations team cannot proceed. The Ad Manager must decide whether to create new placing IDs for the ad.</p>
-                                            <p><strong class="font-medium">For Multiple Ads:</strong> If the problem affects multiple ads or includes an HD ad, it indicates a larger system issue. Escalate immediately to **Caroline's Team**.</p>
-                                        </div>
-                                    </li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Checklist Section -->
-            <section id="checklist" class="content-section searchable-block">
-                <h2 class="text-3xl font-bold">Daily Checklist</h2>
-                <p class="mt-2 text-slate-600">Use this checklist to track your progress on daily ad trafficking tasks.</p>
-                <div id="checklist-container" class="mt-8 space-y-4 max-w-2xl">
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-                        <label class="flex items-center text-lg">
-                            <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-sky-600 focus:ring-sky-500">
-                            <a href="#workflow" data-step-target="1" class="ml-3 cursor-pointer hover:underline">Check Canoe for "Promo Missing Ads" email.</a>
-                        </label>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-                        <label class="flex items-center text-lg">
-                            <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-sky-600 focus:ring-sky-500">
-                             <a href="#workflow" data-step-target="2" class="ml-3 cursor-pointer hover:underline">Check FX/Nat Geo Google Doc for "Awaiting Content".</a>
-                        </label>
-                    </div>
-                     <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-                        <label class="flex items-center text-lg">
-                            <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-sky-600 focus:ring-sky-500">
-                             <a href="#workflow" data-step-target="2" class="ml-3 cursor-pointer hover:underline">Process any ready FX/Nat Geo ads.</a>
-                        </label>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-                        <label class="flex items-center text-lg">
-                            <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-sky-600 focus:ring-sky-500">
-                             <a href="#workflow" data-step-target="3" class="ml-3 cursor-pointer hover:underline">Check ABC/Kids Google Doc for new "X"s.</a>
-                        </label>
-                    </div>
-                     <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-                        <label class="flex items-center text-lg">
-                            <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-sky-600 focus:ring-sky-500">
-                             <a href="#workflow" data-step-target="3" class="ml-3 cursor-pointer hover:underline">Process new ABC/Kids placings and update Doc.</a>
-                        </label>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-                        <label class="flex items-center text-lg">
-                            <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-sky-600 focus:ring-sky-500">
-                             <a href="#troubleshooting" class="ml-3 cursor-pointer hover:underline">Monitor Teams/Email for incoming issues.</a>
-                        </label>
-                    </div>
-                </div>
-            </section>
-            
-             <!-- Contacts Section -->
-            <section id="contacts" class="content-section searchable-block">
-                <h2 class="text-3xl font-bold">Key Contacts & Communication</h2>
-                 <p class="mt-2 text-slate-600">A quick reference list of primary communication channels and key contacts for troubleshooting and escalations.</p>
-                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="text-xl font-semibold mb-4 border-b pb-2">Primary Communication</h3>
-                        <div class="space-y-4">
-                            <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-                                <h4 class="font-bold text-sky-700">Main Teams Channel</h4>
-                                <p class="text-slate-600">`STB VOD Creative - Freeform, ABC & FX/NG`</p>
-                                <p class="text-xs text-slate-500 mt-1">For all general ad/promo issues.</p>
-                            </div>
-                             <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-                                <h4 class="font-bold text-sky-700">Escalation Teams Chat</h4>
-                                <p class="text-slate-600">`Canoe STB VOD troubleshooting`</p>
-                                <p class="text-xs text-slate-500 mt-1">With Disney leadership for major Canoe/GAM issues.</p>
-                            </div>
-                        </div>
-                    </div>
-                     <div>
-                        <h3 class="text-xl font-semibold mb-4 border-b pb-2">External Contacts</h3>
-                         <div class="space-y-4">
-                            <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-                                <h4 class="font-bold text-emerald-700">Canoe Ventures</h4>
-                                <p class="text-slate-600">**Operations:** <a href="mailto:operations@canoeventures.com" class="text-sky-600 hover:underline">operations@canoeventures.com</a></p>
-                                <p class="text-slate-600 mt-1">**Support Desk:** <a href="mailto:support@canoeventures.zendesk.com" class="text-sky-600 hover:underline">support@canoeventures.zendesk.com</a></p>
-                            </div>
-                            <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-                                <h4 class="font-bold text-emerald-700">Comcast (FX "MOVE" Items)</h4>
-                                <p class="text-slate-600">**Christopher Freeman:** <a href="mailto:Christopher_Freeman2@comcast.com" class="text-sky-600 hover:underline">Christopher_Freeman2@comcast.com</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="md:col-span-2">
-                         <h3 class="text-xl font-semibold mb-4 border-b pb-2">Internal Contacts & Teams</h3>
-                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                             <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-                                <h4 class="font-bold text-indigo-700">GAM Issue Escalation</h4>
-                                <ul class="list-disc list-inside mt-2 text-slate-600 space-y-1">
-                                    <li><a href="mailto:caroline.s.bilodeau@disney.espn.com" class="text-sky-600 hover:underline">Caroline Bilodeau</a></li>
-                                    <li><a href="mailto:jessica.skold@disney.com" class="text-sky-600 hover:underline">Jessica Skold</a></li>
-                                    <li><a href="mailto:torey.beigh@espn.com" class="text-sky-600 hover:underline">Torey Beigh</a></li>
-                                    <li class="pt-1 border-t mt-2"><a href="mailto:caroline.s.bilodeau@disney.espn.com,jessica.skold@disney.com,torey.beigh@espn.com" class="text-sky-600 hover:underline font-semibold">Email Full Team</a></li>
-                                </ul>
-                             </div>
-                              <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-                                <h4 class="font-bold text-indigo-700">Media Services</h4>
-                                 <ul class="list-disc list-inside mt-2 text-slate-600">
-                                    <li>**Primary:** <a href="mailto:sean.smith@disney.com" class="text-sky-600 hover:underline">Sean Smith</a></li>
-                                    <li>**Group:** <a href="mailto:datg.media.services@disney.com" class="text-sky-600 hover:underline">datg.media.services@disney.com</a></li>
-                                </ul>
-                             </div>
-                             <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-                                <h4 class="font-bold text-indigo-700">Engineering / Tech</h4>
-                                <ul class="list-disc list-inside mt-2 text-slate-600">
-                                     <li>**Ted** (via <a href="https://app.smartsheet.com/b/form/8b666441e526457f96c6b3dd5a89b3e5" target="_blank" rel="noopener noreferrer" class="text-sky-600 hover:underline">Smartsheet Ticket</a>)</li>
-                                </ul>
-                                <p class="text-xs text-slate-500 mt-1">For held assets and other complex technical errors.</p>
-                             </div>
-                         </div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Video Tutorials Section -->
-            <section id="video-tutorials" class="content-section searchable-block">
-                 <h2 class="text-3xl font-bold">Video Tutorials</h2>
-                <p class="mt-2 text-slate-600 mb-4">The following link opens the video walkthrough in a new tab.</p>
-                <div class="space-y-4">
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-                        <h4 class="font-semibold text-lg">Workflow Overview Video</h4>
-                        <p class="text-slate-600 my-2">Watch the full video walkthrough of the general ad workflow and engineering issues discussed in this SOP.</p>
-                        <a href="https://twdc.sharepoint.com/:v:/s/VODDistribution/EaGUXgtyiNVKoEPK_hevbroB6Q9V6KtVqjJC0cWXMpR24Q" target="_blank" rel="noopener noreferrer" class="font-medium text-sky-600 hover:underline">Open Video on SharePoint &rarr;</a>
-                    </div>
-                </div>
-            </section>
-
         </main>
     </div>
 
