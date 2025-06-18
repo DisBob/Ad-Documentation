@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Ad Workflow SOP</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Calm Harmony -->
-    <!-- Application Structure Plan: The SPA is structured as a task-oriented dashboard with a fixed sidebar for navigation. This design was chosen to mirror how an operations professional would use the SOP: either by following the 'Daily Workflow' sequentially, jumping directly to the 'Troubleshooting' section to solve a specific problem, or referencing the 'Checklist' and 'Contacts' as needed. This non-linear, functional structure is more usable than a static document, allowing users to quickly access the information relevant to their immediate task. Interactive elements like accordions for workflow steps and clickable cards for troubleshooting issues break down complex information into digestible chunks, enhancing comprehension and efficiency. A search bar was added to enable global content filtering and highlighting, further improving findability. -->
-    <!-- Visualization & Content Choices: The application translates procedural text into an interactive experience. Goal: Organize/Inform -> Method: The core workflow is presented as an interactive diagram using styled HTML/Tailwind divs and borders, visually guiding users through decision points (e.g., "Is it a MOVE item?"). This is more engaging than a simple list. Goal: Solve -> Method: The troubleshooting guide uses clickable cards to dynamically reveal detailed resolution steps, preventing information overload. Goal: Track -> Method: A functional daily checklist with HTML checkboxes provides a tangible sense of progress. Goal: Find -> Method: A search input uses JS to filter content and highlight matches with <mark> tags, making specific terms easy to locate. All visualizations are built with HTML/CSS/JS, confirming NO SVG/Mermaid is used, and are integrated within the task-oriented application structure. -->
+    <!-- Application Structure Plan: The SPA is structured as a task-oriented dashboard with a fixed sidebar for navigation. This design was chosen to mirror how an operations professional would use the SOP: either by following the 'Daily Workflow' sequentially, jumping directly to the 'Troubleshooting' section to solve a specific problem, or referencing the 'Checklist' and 'Contacts' as needed. This non-linear, functional structure is more usable than a static document, allowing users to quickly access the information relevant to their immediate task. Interactive elements like accordions for workflow steps and clickable cards for troubleshooting issues break down complex information into digestible chunks, enhancing comprehension and efficiency. A search bar was added to enable global content filtering and highlighting, further improving findability. A new "Ad Operations SOP" tab has been added to house the comprehensive text guide. -->
+    <!-- Visualization & Content Choices: The application translates procedural text into an interactive experience. Goal: Organize/Inform -> Method: The core workflow is presented as an interactive diagram using styled HTML/Tailwind divs and borders, visually guiding users through decision points. Goal: Analyze -> Method: The dashboard now includes Chart.js charts (donut and bar) to visualize mock data on issue breakdowns and ad volume, providing at-a-glance insights. Goal: Solve -> Method: The troubleshooting guide uses clickable cards to dynamically reveal detailed resolution steps, now enhanced with visual flowcharts. Goal: Find -> Method: A search input uses JS to filter content and highlight matches with <mark> tags, making specific terms easy to locate. All visualizations are built with HTML/CSS/JS or Chart.js, confirming NO SVG/Mermaid is used, and are integrated within the task-oriented application structure. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -60,10 +61,47 @@
             border: 1px solid #10b981; /* emerald-500 */
             background-color: #ecfdf5; /* emerald-50 */
         }
+        .flow-arrow {
+            position: absolute;
+            background-color: #94a3b8;
+            z-index: -10;
+        }
         mark {
             background-color: #fef08a; /* yellow-200 */
             padding: 0 2px;
             border-radius: 2px;
+        }
+        .chart-container {
+            position: relative;
+            height: 350px;
+            width: 100%;
+        }
+        .sop-section-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            margin-bottom: 2rem;
+        }
+        .sop-section-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+         .sop-section-card h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+         .sop-section-card ol, .sop-section-card ul {
+            padding-left: 1.5rem;
+        }
+         .sop-section-card li {
+            margin-bottom: 0.75rem;
         }
     </style>
 </head>
@@ -89,17 +127,17 @@
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
                     Dashboard
                 </a>
+                 <a href="#sop" class="sidebar-link flex items-center p-3 rounded-lg font-medium mt-2">
+                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Daily Ad Operations
+                </a>
                 <a href="#workflow" class="sidebar-link flex items-center p-3 rounded-lg font-medium mt-2">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                    Daily Workflow
+                    Ad Workflow
                 </a>
                 <a href="#troubleshooting" class="sidebar-link flex items-center p-3 rounded-lg font-medium mt-2">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
                     Troubleshooting
-                </a>
-                <a href="#sd-gam-issue" class="sidebar-link flex items-center p-3 rounded-lg font-medium mt-2">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    SD GAM Issue
                 </a>
                 <a href="#checklist" class="sidebar-link flex items-center p-3 rounded-lg font-medium mt-2">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -121,32 +159,141 @@
 
             <!-- Dashboard Section -->
             <section id="dashboard" class="content-section active searchable-block">
-                <h2 class="text-3xl font-bold">Welcome to the Interactive Ad Workflow SOP</h2>
-                <p class="mt-4 text-lg text-slate-600">This application transforms the standard operating procedure for ad trafficking into a dynamic, easy-to-use guide. Its purpose is to help you efficiently manage daily tasks, troubleshoot common issues, and quickly find the information you need. Use the navigation on the left to explore the different sections.</p>
+                <h2 class="text-3xl font-bold">Ad Operations Dashboard</h2>
+                <p class="mt-4 text-lg text-slate-600">This dashboard provides a high-level overview of ad operations. Use the navigation to access detailed guides and tools.</p>
                 
-                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                 <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                        <h3 class="font-bold text-xl text-sky-700">Daily Workflow</h3>
-                        <p class="mt-2 text-slate-600">Follow the step-by-step process for handling daily ad trafficking tasks, from checking Canoe reports to managing Google Docs for different networks.</p>
-                        <button onclick="navigateTo('workflow')" class="mt-4 text-sky-600 font-semibold hover:text-sky-800 transition">Start Workflow &rarr;</button>
+                        <h3 class="font-bold text-xl text-sky-700">Daily Ad Operations</h3>
+                        <p class="mt-2 text-slate-600">A comprehensive, text-based guide to all daily tasks and troubleshooting procedures.</p>
+                        <button onclick="navigateTo('sop')" class="mt-4 text-sky-600 font-semibold hover:text-sky-800 transition">View Full SOP &rarr;</button>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
                         <h3 class="font-bold text-xl text-orange-700">Troubleshooting</h3>
-                        <p class="mt-2 text-slate-600">Encounter a problem? Find quick solutions for common issues like GAM errors, missing media, and NLDD build failures.</p>
+                        <p class="mt-2 text-slate-600">Quickly find solutions for common issues like GAM errors, missing media, and duplicate ads.</p>
                          <button onclick="navigateTo('troubleshooting')" class="mt-4 text-orange-600 font-semibold hover:text-orange-800 transition">Solve an Issue &rarr;</button>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                        <h3 class="font-bold text-xl text-emerald-700">Checklist & Contacts</h3>
-                        <p class="mt-2 text-slate-600">Use the daily checklist to track your progress and access a quick-reference list of key internal and external contacts.</p>
-                         <button onclick="navigateTo('checklist')" class="mt-4 text-emerald-600 font-semibold hover:text-emerald-800 transition">View Checklist &rarr;</button>
+                        <h3 class="font-bold text-xl text-emerald-700">Checklist</h3>
+                        <p class="mt-2 text-slate-600">Use the interactive daily checklist to track your progress through standard operating procedures.</p>
+                         <button onclick="navigateTo('checklist')" class="mt-4 text-emerald-600 font-semibold hover:text-emerald-800 transition">Open Checklist &rarr;</button>
+                    </div>
+                     <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <h3 class="font-bold text-xl text-indigo-700">Contacts</h3>
+                        <p class="mt-2 text-slate-600">Access a quick-reference list of key internal and external contacts for escalations.</p>
+                         <button onclick="navigateTo('contacts')" class="mt-4 text-indigo-600 font-semibold hover:text-indigo-800 transition">Find a Contact &rarr;</button>
+                    </div>
+                      <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <h3 class="font-bold text-xl text-rose-700">Video Tutorials</h3>
+                        <p class="mt-2 text-slate-600">Watch video walkthroughs of the ad process and engineering issue resolutions.</p>
+                         <button onclick="navigateTo('video-tutorials')" class="mt-4 text-rose-600 font-semibold hover:text-rose-800 transition">Watch Videos &rarr;</button>
                     </div>
                 </div>
             </section>
+            
+            <!-- SOP Section -->
+            <section id="sop" class="content-section searchable-block">
+                <h2 class="text-3xl font-bold">Daily Ad Operations Schedule</h2>
+                <p class="mt-2 text-slate-600">This guide provides a detailed, time-based walkthrough of all tasks to be performed daily to ensure smooth ad distribution.</p>
+                
+                <div class="mt-8 space-y-8">
+                    <!-- Morning Routine -->
+                    <div class="sop-section-card">
+                        <h3 class="text-sky-800 bg-sky-50">Morning Routine</h3>
+                        <div class="p-6">
+                            <p class="text-slate-600">The morning is focused on processing the first wave of automated reports and handling new ad placements from the Google Docs.</p>
+                            <h4>Task 1: Process Morning Canoe Report</h4>
+                            <p>The first task of the day is to process the automated "Promo Missing Ads" report from Canoe to identify and fix ads that have not been received by our affiliates.</p>
+                            <h5 class="font-medium text-slate-700 mt-4">How to do it:</h5>
+                            <ol class="list-decimal text-slate-600 space-y-2">
+                                <li><strong>Receive and Open:</strong> An email from Canoe will arrive around 8:00 AM. Open the two spreadsheet attachments (one for paid, one for unpaid promos).</li>
+                                <li><strong>Analyze the Report:</strong>
+                                    <ul class="list-disc ml-5 mt-2 space-y-1">
+                                        <li>First, sort the entire sheet by **Network (Column B)**.</li>
+                                        <li>Apply a filter or highlight to all rows where the network is **ABC** or **Disney Channel**. This is your working list for the Charter affiliate. Any other network (FX, Nat Geo) reported as missing for Charter can be ignored.</li>
+                                        <li>Remove the initial sort and re-sort the sheet by **Comcast (Column N)** and then **Cox (Column P)** to group items for those specific affiliates.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Take Action on Missing Ads:</strong>
+                                     <ul class="list-disc ml-5 mt-2 space-y-2">
+                                        <li><strong>For Standard Ads (ABC, Disney Channel, etc.):</strong>
+                                            <ol class="list-decimal ml-5 mt-1 space-y-1">
+                                                <li>Copy the **Mass ID** of the missing ad.</li>
+                                                <li>Search for this Mass ID in <a href="https://dmed.twdcmediahub.com/vod-plus/dashboard" target="_blank" rel="noopener noreferrer" class="text-sky-600 hover:underline">Media Hub VOD+</a>.</li>
+                                                <li>Confirm the asset is correct and **repitch** it to the specific affiliate (Comcast, Cox, or Charter) listed in the report.</li>
+                                                <li>Update your personal tracking list with the repitch date.</li>
+                                            </ol>
+                                        </li>
+                                        <li><strong>For FX "MOVE" Assets:</strong>
+                                            <ol class="list-decimal ml-5 mt-1 space-y-1">
+                                                <li>These are identified by an ID starting with "MOVE".</li>
+                                                <li>**Do not attempt to repitch these yourself.**</li>
+                                                <li>Open a new email to <strong>Christopher Freeman</strong> (`Christopher_Freeman2@comcast.com`) to request a manual repitch.</li>
+                                            </ol>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ol>
+                            <h4>Task 2: Process Google Docs</h4>
+                             <p>After clearing the Canoe report, shift focus to the shared <a href="https://docs.google.com/spreadsheets/d/1ONFa7z7nKNwLnQjt9Y78FEZVzSchV9kDYArEmEO5h1c/edit?pli=1&gid=1757668824#gid=1757668824" target="_blank" rel="noopener noreferrer" class="text-sky-600 hover:underline">Google Docs</a> to process new ad placements.</p>
+                             <h5 class="font-medium text-slate-700 mt-4">How to do it (FX & Nat Geo Workflow):</h5>
+                             <ol class="list-decimal text-slate-600 space-y-2">
+                                 <li>Open the <a href="https://docs.google.com/spreadsheets/d/1ONFa7z7nKNwLnQjt9Y78FEZVzSchV9kDYArEmEO5h1c/edit?pli=1&gid=1089390826#gid=1089390826" target="_blank" rel="noopener noreferrer">"FX & Nat Geo Working" Google Doc</a>.</li>
+                                <li>Scan the sheet for any rows with the status **"Awaiting Content"**.</li>
+                                <li>Copy the **ISCI/Provider ID (Column D)**.</li>
+                                <li>In the **Media Dashboard** (not VOD+), search for the ID. If the status is green/completed, proceed.</li>
+                                <li>Check the box next to the completed asset and select **"Generate DAI asset"** from the actions menu.</li>
+                                <li>Navigate to <a href="https://dmed.twdcmediahub.com/vod-plus/dashboard" target="_blank" rel="noopener noreferrer">Media Hub VOD+</a>, filter by **NLDD Type: DAI** for today's date, and find the new asset.</li>
+                                <li>Select the asset(s) and click **"Create Planner"**.</li>
+                                <li>Copy the essential planner details (Asset Name, Move Asset ID, Start/End dates) and paste them back into the <a href="https://docs.google.com/spreadsheets/d/1ONFa7z7nKNwLnQjt9Y78FEZVzSchV9kDYArEmEO5h1c/edit?pli=1&gid=1089390826#gid=1089390826" target="_blank" rel="noopener noreferrer">FX & Nat Geo Working Google Doc</a>, updating the status to **"Complete"**.</li>
+                             </ol>
+                             <h5 class="font-medium text-slate-700 mt-4">How to do it (ABC & Kids Workflow):</h5>
+                             <ol class="list-decimal text-slate-600 space-y-2">
+                                <li>Open the <a href="https://docs.google.com/spreadsheets/d/1ONFa7z7nKNwLnQjt9Y78FEZVzSchV9kDYArEmEO5h1c/edit?pli=1&gid=1757668824#gid=1757668824" target="_blank" rel="noopener noreferrer">"ABC & Kids Working" Google Doc</a>.</li>
+                                <li>Your work begins when an **"X"** appears in the **"Media Service" column (Column N)**.</li>
+                                <li>Copy the **Placing ID** from either the SD (**Column O**) or HD (**Column Q**) column.</li>
+                                <li>Search for this Placing ID in <a href="https://dmed.twdcmediahub.com/vod-plus/dashboard" target="_blank" rel="noopener noreferrer">Media Hub VOD+</a> and verify both SD and HD versions are correct.</li>
+                                <li>Copy the **Mass ID** for both versions from VOD+.</li>
+                                <li>Paste the Mass IDs back into the correct columns in the <a href="https://docs.google.com/spreadsheets/d/1ONFa7z7nKNwLnQjt9Y78FEZVzSchV9kDYArEmEO5h1c/edit?pli=1&gid=1757668824#gid=1757668824" target="_blank" rel="noopener noreferrer">Google Doc</a> and add the current date to finalize.</li>
+                            </ol>
+                        </div>
+                    </div>
 
-            <!-- Daily Workflow Section -->
+                    <!-- Ongoing Tasks -->
+                     <div class="sop-section-card">
+                        <h3 class="text-orange-800 bg-orange-50">Throughout the Day (Ongoing)</h3>
+                        <div class="p-6">
+                            <p class="text-slate-600">Continuously monitor communication channels for ad-hoc issues and troubleshoot as they arise.</p>
+                            <ul class="list-disc mt-4 pl-5 space-y-3 text-slate-700">
+                                <li><strong>Monitor the Teams Channel:</strong> Keep the `STB VOD Creative - Freeform, ABC & FX/NG` channel open to see real-time issues reported by Ad Managers.</li>
+                                <li><strong>Handle GAM Issues:</strong> If an Ad Manager reports an asset is not in GAM, perform the standard two-step repitch. If that fails, escalate to Caroline's team.</li>
+                                <li><strong>Resolve Missing Media:</strong> If an ad is marked with an "X" but is not in <a href="https://dmed.twdcmediahub.com/vod-plus/dashboard" target="_blank" rel="noopener noreferrer" class="text-sky-600 hover:underline">Media Hub VOD+</a>, check the file history, contact Media Services, and if necessary, perform a manual purge and republish from Banjo.</li>
+                                <li><strong>Manage Duplicates:</strong> If a row turns blue (duplicate) in the <a href="https://docs.google.com/spreadsheets/d/1ONFa7z7nKNwLnQjt9Y78FEZVzSchV9kDYArEmEO5h1c/edit?pli=1&gid=1757668824#gid=1757668824" target="_blank" rel="noopener noreferrer" class="text-sky-600 hover:underline">Google Doc</a>, mark it in red, add a note, and contact the Ad Manager to see if it's an error or an intended update.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Afternoon Routine -->
+                     <div class="sop-section-card">
+                        <h3 class="text-indigo-800 bg-indigo-50">Afternoon Routine (Approx. 4:00 PM CDT)</h3>
+                        <div class="p-6">
+                            <p class="text-slate-600">Process the second and final Canoe report of the day.</p>
+                             <h5 class="font-medium text-slate-700 mt-4">How to do it:</h5>
+                             <ol class="list-decimal text-slate-600 space-y-2">
+                                <li><strong>Receive and Process:</strong> An email from Canoe will arrive around 4:00 PM.</li>
+                                <li><strong>Repeat the Morning Process:</strong> Follow the exact same analysis and action steps outlined in **Task 1** of the Morning Routine to resolve any newly reported missing ads before the end of the day.</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- Ad Workflow Section -->
             <section id="workflow" class="content-section">
-                <h2 class="text-3xl font-bold">Daily Workflow</h2>
-                <p class="mt-2 text-slate-600">This section provides a step-by-step guide to the daily ad trafficking process. Click each step header to expand and see the detailed procedure.</p>
+                <h2 class="text-3xl font-bold">Ad Workflow Visuals</h2>
+                <p class="mt-2 text-slate-600">This section provides a visual, step-by-step guide to the daily ad trafficking process. Click each step header to expand and see the detailed procedure.</p>
 
                 <div class="mt-8 space-y-4" id="workflow-steps">
                     <!-- Step 1 -->
@@ -157,17 +304,7 @@
                         </button>
                         <div class="step-accordion-content px-4 pb-4">
                             <p class="text-slate-600 my-4">The first task of the day is to check the Canoe platform for reports on missing ad promotions. The email arrives twice daily and contains two attachments (one for paid, one for unpaid promos).</p>
-                            <h4 class="font-semibold text-slate-800 mt-4 mb-2">Detailed Steps:</h4>
-                            <ol class="list-decimal list-inside space-y-3 text-slate-700">
-                                <li>Open the "Promo Missing Ads" email from Canoe.</li>
-                                <li>To analyze the attached report, first sort by **Network (Column B)**.</li>
-                                <li>Apply a highlight marker to **ABC** and **Disney Channel** rows. This is critical because **Charter** only receives ads for these two networks. Any other network flagged as missing for Charter can be ignored.</li>
-                                <li>Next, sort the report by affiliate (**Comcast - Column N** and **Cox - Column P**) to group them.</li>
-                                <li>Compare the **Mass ID** on the report to your pre-existing tracking list to identify new issues.</li>
-                                <li>If an item is new and valid, proceed to the action flow below.</li>
-                                <li>If an item was already repitched but remains on the report for a few days, escalate by emailing <a href="mailto:operations@canoeventures.com" class="text-sky-600 hover:underline font-medium">Canoe Operations</a>.</li>
-                            </ol>
-                            <div class="mt-6 p-4 bg-slate-50 rounded-lg">
+                             <div class="mt-6 p-4 bg-slate-50 rounded-lg">
                                 <h4 class="font-bold text-center mb-6 text-slate-700">Action Flow for New Missing Ads</h4>
                                 <div class="relative">
                                      <div class="flex justify-center">
@@ -182,7 +319,7 @@
                                         </div>
                                         <div class="flow-chart-box flow-chart-process">
                                             <p class="font-semibold">NO &rarr; Standard Repitch</p>
-                                            <p class="text-sm mt-1">Search the Mass ID in Media Hub (VOD+) and repitch to the correct affiliate.</p>
+                                            <p class="text-sm mt-1">Search the Mass ID in <a href="https://dmed.twdcmediahub.com/vod-plus/dashboard" target="_blank" rel="noopener noreferrer" class="text-sky-600 hover:underline font-medium">Media Hub VOD+</a> and repitch to the correct affiliate.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -197,16 +334,17 @@
                         </button>
                         <div class="step-accordion-content px-4 pb-4">
                             <p class="text-slate-600 my-4">This workflow uses the "FX & Nat Geo Working" Google Doc and requires converting standard assets into DAI (Dynamic Ad Insertion) assets.</p>
-                            <h4 class="font-semibold text-slate-800 mt-4 mb-2">Detailed Steps:</h4>
-                            <ol class="list-decimal list-inside space-y-3 text-slate-700">
-                                <li>**Clean the Google Doc (bi-weekly):** Review the "License Window End" column. Cut and paste any expired ads into the "Pitched - Past LW End" tab.</li>
-                                <li>**Check for "Awaiting Content":** Find rows marked with this status. Copy the **ISCI/Provider ID (Column D)**.</li>
-                                <li>**Search in Media Dashboard:** Paste the ID into the search bar in the **Media Dashboard** (not VOD+). If the status is green/completed, proceed. If not, the content is not yet available.</li>
-                                <li>**Generate DAI Asset:** In the Media Dashboard, check the box for the completed asset and from the dropdown menu, select "Generate DAI asset".</li>
-                                <li>**Create Planner in VOD+:** Once the DAI asset is generated, switch to **VOD+**. Filter by **NLDD Type: DAI** and **Start Date: Today**. The new asset will appear.</li>
-                                <li>Select the new asset(s) and click **"Create Planner"**.</li>
-                                <li>**Format and Update Google Doc:** From the planner, narrow down the columns to **Asset Name, Move Asset ID, Start,** and **End**. Copy the HD and SD lines and paste them into the FX Google Doc. Update the status column to "Complete".</li>
-                           </ol>
+                            <div class="mt-6 p-4 bg-slate-50 rounded-lg">
+                                <h4 class="font-bold text-center mb-6 text-slate-700">FX/Nat Geo DAI Asset Flow</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-8 relative">
+                                    <div class="flow-chart-box flow-chart-process"><p>1. Check <a href="https://docs.google.com/spreadsheets/d/1ONFa7z7nKNwLnQjt9Y78FEZVzSchV9kDYArEmEO5h1c/edit?pli=1&gid=1089390826#gid=1089390826" target="_blank" rel="noopener noreferrer" class="text-sky-600 hover:underline font-medium">Google Doc</a> for "Awaiting Content"</p></div>
+                                    <div class="flow-chart-box flow-chart-process"><p>2. Search for ISCI in Media Dashboard</p></div>
+                                    <div class="flow-chart-box flow-chart-decision"><p>3. Is media ready (green)?</p></div>
+                                    <div class="md:col-start-3 flow-chart-box flow-chart-process"><p>4. Generate DAI Asset</p></div>
+                                    <div class="md:col-start-2 flow-chart-box flow-chart-process"><p>5. Create Planner in VOD+</p></div>
+                                    <div class="md:col-start-1 flow-chart-box flow-chart-process"><p>6. Update Google Doc with planner info</p></div>
+                                </div>
+                             </div>
                         </div>
                     </div>
                      <!-- Step 3 -->
@@ -217,15 +355,14 @@
                         </button>
                         <div class="step-accordion-content px-4 pb-4">
                              <p class="text-slate-600 my-4">This is a multi-team workflow tracked within the "ABC & Kids Working" Google Doc. Our work begins after Media Services has completed their prep.</p>
-                             <h4 class="font-semibold text-slate-800 mt-4 mb-2">Detailed Steps:</h4>
-                           <ol class="list-decimal list-inside space-y-3 text-slate-700">
-                                <li>**Monitor "Media Service" Column (N):** The workflow begins when an **"X"** appears in this column, indicating Media Services has prepped the ad.</li>
-                                <li>**Verify in VOD+:** Copy the **Placing ID (Column O or Q)** and search for it in VOD+.</li>
-                                <li>Confirm that the correct versions exist (one SD and one HD) and that the media is correct.</li>
-                                <li>If the Placing IDs are incorrect (e.g., HD in SD slot), highlight the row and notify the Ad Manager. Do not change the IDs.</li>
-                                <li>**Update Google Doc:** If the assets are correct, copy the **Mass ID** from VOD+.</li>
-                                <li>Paste the Mass ID into the appropriate SD/HD column in the Google Doc and add the current date to the last column.</li>
-                           </ol>
+                             <div class="mt-6 p-4 bg-slate-50 rounded-lg">
+                                <h4 class="font-bold text-center mb-6 text-slate-700">ABC/Kids Ad Flow</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="flow-chart-box flow-chart-process"><p>1. Monitor for "X" in Media Service column in <a href="https://docs.google.com/spreadsheets/d/1ONFa7z7nKNwLnQjt9Y78FEZVzSchV9kDYArEmEO5h1c/edit?pli=1&gid=1757668824#gid=1757668824" target="_blank" rel="noopener noreferrer" class="text-sky-600 hover:underline font-medium">Google Doc</a></p></div>
+                                    <div class="flow-chart-box flow-chart-process"><p>2. Verify Placing ID in <a href="https://dmed.twdcmediahub.com/vod-plus/dashboard" target="_blank" rel="noopener noreferrer" class="text-sky-600 hover:underline font-medium">VOD+</a></p></div>
+                                    <div class="flow-chart-box flow-chart-process"><p>3. Paste Mass ID into Google Doc</p></div>
+                                </div>
+                             </div>
                         </div>
                     </div>
                 </div>
@@ -249,6 +386,10 @@
                             <h4 class="font-semibold text-lg">GAM Issues</h4>
                             <p class="text-sm text-slate-500 mt-1">Asset not appearing in Google Ad Manager.</p>
                         </button>
+                         <button data-target="ts-sd-gam" class="troubleshooting-card searchable-block w-full text-left p-4 bg-white rounded-lg border-2 border-transparent hover:border-sky-400 transition shadow-sm">
+                            <h4 class="font-semibold text-lg">SD Ad GAM Issue</h4>
+                            <p class="text-sm text-slate-500 mt-1">A recurring problem with SD ads in GAM.</p>
+                        </button>
                     </div>
                     <div class="lg:w-2/3 mt-6 lg:mt-0">
                         <div id="troubleshooting-content-area" class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm min-h-[300px]">
@@ -258,60 +399,59 @@
                             </div>
                             <div id="ts-gam" class="troubleshooting-content hidden">
                                 <h3 class="font-bold text-xl mb-4">Resolving GAM Issues</h3>
-                                <ol class="list-decimal list-inside space-y-3">
-                                    <li>**Initial Repitch:** Repitch the asset to the affiliate in VOD+. Ask the Ad Manager to check again in 30 minutes.</li>
-                                    <li>**Check with Canoe:** If the issue persists, email <a href="mailto:operations@canoeventures.com" class="text-sky-600 hover:underline font-medium">Canoe Operations</a> to confirm they see the asset as delivered.</li>
-                                    <li>**Escalate:** If widespread, inform Caroline's team via the `Canoe STB VOD troubleshooting` Teams chat. Contacts: <a href="mailto:caroline.s.bilodeau@disney.espn.com" class="text-sky-600 hover:underline font-medium">Caroline Bilodeau</a>, <a href="mailto:jessica.skold@disney.com" class="text-sky-600 hover:underline font-medium">Jessica Skold</a>, <a href="mailto:torey.beigh@espn.com" class="text-sky-600 hover:underline font-medium">Torey Beigh</a>. They will open the official ticket.</li>
-                                </ol>
+                                <div class="space-y-4">
+                                    <div class="flow-chart-box flow-chart-process"><p>1. Ad Manager reports issue. Ask them to check for extra spaces in GAM ID.</p></div>
+                                    <div class="flow-chart-box flow-chart-process"><p>2. Perform standard repitch.</p></div>
+                                    <div class="flow-chart-box flow-chart-decision"><p>3. Does issue persist?</p></div>
+                                    <div class="flow-chart-box flow-chart-contact"><p><strong>Yes &rarr;</strong> Escalate to Caroline's Team</p></div>
+                                     <div class="flow-chart-box flow-chart-process"><p><strong>No &rarr;</strong> Resolved.</p></div>
+                                </div>
                             </div>
                              <div id="ts-media" class="troubleshooting-content hidden">
                                 <h3 class="font-bold text-xl mb-4">Resolving Missing Media</h3>
-                                <ol class="list-decimal list-inside space-y-3">
-                                    <li>**Check Edit History:** Right-click the cell in the Google Doc to see *when* the "X" was added. If it was very recent, wait 30-60 minutes.</li>
-                                    <li>**Contact Media Services:** If still missing, ping <a href="mailto:sean.smith@disney.com" class="text-sky-600 hover:underline font-medium">Sean Smith</a> via Teams or email the group at <a href="mailto:datg.media.services@disney.com" class="text-sky-600 hover:underline font-medium">`datg.media.services@disney.com`</a> to confirm the asset is in a "ready state."</li>
-                                    <li>**Purge and Republish:** If Sean confirms it's ready, the asset may be stuck. **Purge it from VOD+ and SDVI**, then find the asset in **Banjo** and click **"Publish"** to resend it.</li>
-                                </ol>
+                                <div class="space-y-4">
+                                     <div class="flow-chart-box flow-chart-process"><p>1. Check edit history in Google Doc. If recent, wait 30-60 mins.</p></div>
+                                     <div class="flow-chart-box flow-chart-contact"><p>2. Contact Media Services to confirm "ready state."</p></div>
+                                     <div class="flow-chart-box flow-chart-decision"><p>3. Is it confirmed ready?</p></div>
+                                     <div class="flow-chart-box flow-chart-process"><p><strong>Yes &rarr;</strong> Purge from VOD+/SDVI and Republish from Banjo.</p></div>
+                                     <div class="flow-chart-box flow-chart-process"><p><strong>No &rarr;</strong> Wait for Media Services to fix.</p></div>
+                                </div>
                             </div>
                             <div id="ts-duplicate" class="troubleshooting-content hidden">
                                 <h3 class="font-bold text-xl mb-4">Handling Duplicate Ads</h3>
-                                 <ol class="list-decimal list-inside space-y-3">
-                                    <li>**Mark as Duplicate:** Highlight the entire row with the designated "duplicate" color and put an "X" in the processing columns.</li>
-                                    <li>**Add a Note:** Add a note indicating which line it is a duplicate of (e.g., "Duplicate of line 56").</li>
-                                    <li>**Await Instructions:** Contact the **Ad Manager and their Supervisor** (contact info in Google Doc) to clarify if this is a true duplicate or an updated version.</li>
+                                  <div class="space-y-4">
+                                     <div class="flow-chart-box flow-chart-process"><p>1. Highlight duplicate row in red and add "X" to processing columns.</p></div>
+                                     <div class="flow-chart-box flow-chart-process"><p>2. Add note referencing original line number.</p></div>
+                                     <div class="flow-chart-box flow-chart-contact"><p>3. Contact Ad Manager/Supervisor for clarification.</p></div>
+                                </div>
+                            </div>
+                            <div id="ts-sd-gam" class="troubleshooting-content hidden">
+                                <h3 class="font-bold text-xl mb-4">Resolving SD Ad GAM Issue</h3>
+                                <p class="mb-4 text-slate-600">This is a recurring problem where Standard Definition (SD) ads fail to appear in GAM, even when the HD version is working correctly.</p>
+                                <ol class="list-decimal list-inside space-y-4 text-slate-700">
+                                    <li>
+                                        <strong class="font-semibold text-slate-800">Rule Out User Error:</strong>
+                                        <p class="ml-6 mt-1">Ask the Ad Manager to confirm there are no extra or "phantom" spaces before or after the Placing/Mass ID in GAM and to try typing it manually.</p>
+                                    </li>
+                                    <li>
+                                        <strong class="font-semibold text-slate-800">Perform the Two-Step Repitch:</strong>
+                                        <p class="ml-6 mt-1">This specific sequence has a high success rate for this issue:</p>
+                                        <ul class="list-disc list-inside ml-8 mt-2 space-y-1">
+                                            <li>**Step A:** Repitch the SD asset directly to the **affiliate** and wait for completion.</li>
+                                            <li>**Step B:** After the first delivery is complete, repitch the asset specifically to **GAM**.</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <strong class="font-semibold text-slate-800">Escalation Path:</strong>
+                                        <div class="ml-6 mt-1 space-y-2">
+                                            <p><strong class="font-medium">For a Single Ad:</strong> If the two-step repitch fails, operations team cannot proceed. The Ad Manager must decide whether to create new placing IDs for the ad.</p>
+                                            <p><strong class="font-medium">For Multiple Ads:</strong> If the problem affects multiple ads or includes an HD ad, it indicates a larger system issue. Escalate immediately to **Caroline's Team**.</p>
+                                        </div>
+                                    </li>
                                 </ol>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-
-             <!-- SD GAM Issue Section -->
-            <section id="sd-gam-issue" class="content-section searchable-block">
-                <h2 class="text-3xl font-bold">SD GAM Issue Deep Dive</h2>
-                <p class="mt-2 text-slate-600 mb-6">This section provides a detailed explanation of the recurring issue where Standard Definition (SD) ads fail to appear in Google Ad Manager (GAM), even when the HD version is working correctly.</p>
-                <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
-                    <h3 class="font-bold text-xl mb-4 text-orange-700">Step-by-Step Troubleshooting Process</h3>
-                    <ol class="list-decimal list-inside space-y-4 text-slate-700">
-                        <li>
-                            <strong class="font-semibold text-slate-800">Rule Out User Error:</strong>
-                            <p class="ml-6 mt-1">The first step is to ask the Ad Manager to double-check their work in GAM. Have them confirm there are no extra or "phantom" spaces before or after the Placing ID or Mass ID when searching. It's also best practice to have them try typing the ID in manually instead of copy-pasting.</p>
-                        </li>
-                        <li>
-                            <strong class="font-semibold text-slate-800">Perform the Two-Step Repitch:</strong>
-                            <p class="ml-6 mt-1">If the manual check doesn't work, this specific repitching sequence resolves the issue about 85% of the time:</p>
-                            <ul class="list-disc list-inside ml-8 mt-2 space-y-1">
-                                <li>**Step A:** Repitch the SD asset directly to the affiliate (e.g., Comcast) in VOD+ and wait for that delivery to complete.</li>
-                                <li>**Step B:** After the first delivery is done, repitch the asset specifically to GAM.</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <strong class="font-semibold text-slate-800">Escalation Path:</strong>
-                            <div class="ml-6 mt-1 space-y-2">
-                                <p><strong class="font-medium">For a Single SD Ad:</strong> If the two-step repitch fails for one isolated ad, there are no further technical steps for the operations team. The Ad Manager must decide whether to create entirely new placing IDs for both the HD and SD versions.</p>
-                                <p><strong class="font-medium">For Multiple Ads:</strong> If the problem affects multiple ads or includes an HD ad, it indicates a larger system issue. Escalate immediately to **Caroline's Team** for a formal investigation with Canoe and other partners.</p>
-                            </div>
-                        </li>
-                    </ol>
                 </div>
             </section>
             
@@ -324,12 +464,6 @@
                         <label class="flex items-center text-lg">
                             <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-sky-600 focus:ring-sky-500">
                             <a href="#workflow" data-step-target="1" class="ml-3 cursor-pointer hover:underline">Check Canoe for "Promo Missing Ads" email.</a>
-                        </label>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-                        <label class="flex items-center text-lg">
-                            <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-sky-600 focus:ring-sky-500">
-                             <a href="#workflow" data-step-target="1" class="ml-3 cursor-pointer hover:underline">Filter Canoe report and handle repitches.</a>
                         </label>
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
@@ -433,7 +567,7 @@
             <!-- Video Tutorials Section -->
             <section id="video-tutorials" class="content-section searchable-block">
                  <h2 class="text-3xl font-bold">Video Tutorials</h2>
-                <p class="mt-2 text-slate-600 mb-4">The following links open the video walkthroughs in a new tab.</p>
+                <p class="mt-2 text-slate-600 mb-4">The following link opens the video walkthrough in a new tab.</p>
                 <div class="space-y-4">
                     <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
                         <h4 class="font-semibold text-lg">Workflow Overview Video</h4>
@@ -610,7 +744,7 @@
                     }
                 });
             });
-
+            
         });
     </script>
 </body>
